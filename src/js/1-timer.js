@@ -24,7 +24,7 @@ flatpickr("#datetime-picker", {
     minuteIncrement: 1,
     onClose(selectedDates) {
         userSelectedDate = selectedDates[0];
-        if (userSelectedDate <= new Date() ) {
+        if (userSelectedDate <= Date.now() ) {
             iziToast.show({
                 title: 'Hey',
                 message: "Please choose a date in the future"
