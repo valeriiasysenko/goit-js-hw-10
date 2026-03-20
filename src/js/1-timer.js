@@ -18,6 +18,7 @@ const input = document.querySelector("#datetime-picker");
 
 startBtn.disabled = true;
 
+let userSelectedDate;
 
 flatpickr("#datetime-picker", {
     enableTime: true,
@@ -25,7 +26,9 @@ flatpickr("#datetime-picker", {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-        if (selectedDates[0]<= Date.now() ) {
+        userSelectedDate = selectedDates[0];
+        console.log(userSelectedDate);
+        if (userSelectedDate <= Date.now() ) {
             iziToast.show({
                 title: 'Hey',
                 message: "Please choose a date in the future"
@@ -53,20 +56,21 @@ function onBtnHandler() {
 
     indexInterval = setInterval(() => {
         const initTime = Date.now();
-        const userSelectedDate = flatpickr.parseDate(input.value, "Y-m-d H:i");
 
-         const diff = userSelectedDate - initTime;
-         const obj = convertMs(diff);
-         const str = addLeadingZero(obj);
-         if (diff <= 0) {
-             clearInterval(indexInterval);
-             input.disabled = false;
-             startBtn.disabled = true;
-            } 
+        const diff = userSelectedDate.getTime() - initTime;
+        const obj = convertMs(diff);
+        const str = addLeadingZero(obj);
          daysSpan.innerHTML = str.daysStr;
          hoursSpan.innerHTML = str.hoursStr;
          minutesSpan.innerHTML = str.minutesStr;
-         secondsSpan.innerHTML = str.secondsStr;
+        secondsSpan.innerHTML = str.secondsStr;
+        
+         if (diff <= 1) {
+             clearInterval(indexInterval);
+             input.disabled = false;
+             startBtn.disabled = true;
+             return;
+            } 
 
      }, 1000);
 }
