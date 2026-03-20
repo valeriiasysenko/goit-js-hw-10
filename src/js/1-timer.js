@@ -14,8 +14,10 @@ const daysSpan = document.querySelector("[data-days]");
 const hoursSpan = document.querySelector("[data-hours]");
 const minutesSpan = document.querySelector("[data-minutes]");
 const secondsSpan = document.querySelector("[data-seconds]");
+const input = document.querySelector("#datetime-picker");
 
-let userSelectedDate = null;
+startBtn.disabled = true;
+
 
 flatpickr("#datetime-picker", {
     enableTime: true,
@@ -23,16 +25,18 @@ flatpickr("#datetime-picker", {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-        userSelectedDate = selectedDates[0];
-        if (userSelectedDate <= Date.now() ) {
+        if (selectedDates[0]<= Date.now() ) {
             iziToast.show({
                 title: 'Hey',
                 message: "Please choose a date in the future"
             });
+            startBtn.disabled = true;
             startBtn.classList.add("disable");
         } else {
             startBtn.classList.remove("disable");
             startBtn.classList.add("button-active");
+            startBtn.disabled = false;
+            
         }
 
     }
@@ -42,20 +46,29 @@ let indexInterval;
 
 startBtn.addEventListener("click", onBtnHandler);
 function onBtnHandler() {
-    const initTime = Date.now();
-     indexInterval = setInterval(() => {
+    
+    input.disabled = true;
+    startBtn.disabled = true;
+    startBtn.classList.remove("button-active");
+
+    indexInterval = setInterval(() => {
+        const initTime = Date.now();
+        const userSelectedDate = flatpickr.parseDate(input.value, "Y-m-d H:i");
+
          const diff = userSelectedDate - initTime;
          const obj = convertMs(diff);
          const str = addLeadingZero(obj);
          if (diff <= 0) {
              clearInterval(indexInterval);
+             input.disabled = false;
+             startBtn.disabled = true;
             } 
          daysSpan.innerHTML = str.daysStr;
          hoursSpan.innerHTML = str.hoursStr;
          minutesSpan.innerHTML = str.minutesStr;
          secondsSpan.innerHTML = str.secondsStr;
 
-    }, 1000);
+     }, 1000);
 }
 
 function convertMs(ms) {
