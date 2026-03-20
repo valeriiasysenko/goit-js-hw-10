@@ -30,7 +30,7 @@ flatpickr("#datetime-picker", {
         console.log(userSelectedDate);
         if (userSelectedDate <= Date.now() ) {
             iziToast.show({
-                title: 'Hey',
+                title: 'Error',
                 message: "Please choose a date in the future"
             });
             startBtn.disabled = true;
@@ -39,7 +39,7 @@ flatpickr("#datetime-picker", {
             startBtn.classList.remove("disable");
             startBtn.classList.add("button-active");
             startBtn.disabled = false;
-            
+
         }
 
     }
@@ -56,21 +56,20 @@ function onBtnHandler() {
 
     indexInterval = setInterval(() => {
         const initTime = Date.now();
-
         const diff = userSelectedDate.getTime() - initTime;
         const obj = convertMs(diff);
-        const str = addLeadingZero(obj);
-         daysSpan.innerHTML = str.daysStr;
-         hoursSpan.innerHTML = str.hoursStr;
-         minutesSpan.innerHTML = str.minutesStr;
-        secondsSpan.innerHTML = str.secondsStr;
-        
          if (diff <= 1) {
              clearInterval(indexInterval);
              input.disabled = false;
              startBtn.disabled = true;
              return;
             } 
+        const str = addLeadingZero(obj);
+
+        daysSpan.innerHTML = str.daysStr;
+        hoursSpan.innerHTML = str.hoursStr;
+        minutesSpan.innerHTML = str.minutesStr;
+        secondsSpan.innerHTML = str.secondsStr;
 
      }, 1000);
 }
