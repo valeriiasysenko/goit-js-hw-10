@@ -8,11 +8,65 @@
 @import url('./reset.css');
 @import url('./base.css');
 @import url('./container.css');
-@import url('./animations.css');
+
 
 /* Sections style */
 @import url('./header.css');
-@import url('./vite-promo.css');
-@import url('./badges.css');
 @import url('./back-link.css');
-@import url('./footer.css');
+
+.timer{
+  display: flex;
+  gap: 24px;
+}
+.field{
+  display: flex;
+  flex-direction: column;
+}
+main{
+  margin-top: 45px;
+  margin-left: 45px;
+}
+#datetime-picker{
+  width: 272px;
+  height: 40px;
+  font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.04em;
+    color: #2e2f42;
+    margin-left: 8px;
+}
+button{
+  border-radius: 8px;
+    padding: 8px 16px;
+    width: 75px;
+    height: 40px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.04em;
+    border: none;
+    cursor: pointer;
+    background: #cfcfcf;
+      color: #989898;
+}
+.button-active{
+ background: #4e75ff;
+ color: #fff;
+}
+/* button:hover{
+  background: #6c8cff;
+  color: #fff;
+} */
+.disable{
+  background: #cfcfcf;
+    color: #989898;
+}
+.input-container{
+  display: flex;
+  gap:8px;
+  align-items: center;
+  margin-bottom: 32px;
+}
