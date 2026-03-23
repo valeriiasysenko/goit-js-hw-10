@@ -28,7 +28,7 @@ flatpickr("#datetime-picker", {
     onClose(selectedDates) {
         userSelectedDate = selectedDates[0];
         console.log(userSelectedDate);
-        if (userSelectedDate <= Date.now() ) {
+        if (userSelectedDate <= Date.now()) {
             iziToast.show({
                 title: 'Error',
                 message: "Please choose a date in the future"
@@ -43,13 +43,13 @@ flatpickr("#datetime-picker", {
         }
 
     }
-}); 
+});
 
-let indexInterval; 
+let indexInterval;
 
 startBtn.addEventListener("click", onBtnHandler);
 function onBtnHandler() {
-    
+
     input.disabled = true;
     startBtn.disabled = true;
     startBtn.classList.remove("button-active");
@@ -58,12 +58,12 @@ function onBtnHandler() {
         const initTime = Date.now();
         const diff = userSelectedDate.getTime() - initTime;
         const obj = convertMs(diff);
-         if (diff <= 1) {
-             clearInterval(indexInterval);
-             input.disabled = false;
-             startBtn.disabled = true;
-             return;
-            } 
+        if (diff <= 1000) {
+            clearInterval(indexInterval);
+            input.disabled = false;
+            startBtn.disabled = true;
+            return;
+        }
         const str = addLeadingZero(obj);
 
         daysSpan.innerHTML = str.daysStr;
@@ -71,26 +71,26 @@ function onBtnHandler() {
         minutesSpan.innerHTML = str.minutesStr;
         secondsSpan.innerHTML = str.secondsStr;
 
-     }, 1000);
+    }, 1000);
 }
 
 function convertMs(ms) {
-  // Number of milliseconds per unit of time
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
+    // Number of milliseconds per unit of time
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
 
-  // Remaining days
-  const days = Math.floor(ms / day);
-  // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
-  // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+    // Remaining days
+    const days = Math.floor(ms / day);
+    // Remaining hours
+    const hours = Math.floor((ms % day) / hour);
+    // Remaining minutes
+    const minutes = Math.floor(((ms % day) % hour) / minute);
+    // Remaining seconds
+    const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
-  return { days, hours, minutes, seconds };
+    return { days, hours, minutes, seconds };
 }
 
 function addLeadingZero(value) {
